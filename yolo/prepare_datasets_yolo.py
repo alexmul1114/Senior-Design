@@ -80,6 +80,8 @@ def main():
                         for y_start in [0, 200, 400, 600]:
                             patch = img.crop((x_start, y_start, x_start + 200, y_start + 200))
                             split_folder = patch_idx_to_split_folder[str(overall_patch_idx)]
+                            if overall_patch_idx == 3915: 
+                                print(split_folder)
                             patch_path = os.path.join(split_folder, 
                                                       img_info['file_name'][:-4] + '_' + str(patch_idx) + '_' + str(overall_patch_idx) + '.png')
                             patch.save(patch_path)
