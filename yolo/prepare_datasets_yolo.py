@@ -107,62 +107,101 @@ def main():
             box_x_end_idx = box_x_end // 200
             box_y_start_idx = box_y_start // 200
             box_y_end_idx = box_y_end // 200
+
+            # For ships overlapping multiple patches, add all patches
+            img_patch_idxs = []   
+            center_xs = []
+            center_ys = []
+            widths = []
+            heights = []
             
             if box_x_start_idx == box_x_end_idx and box_y_start_idx == box_y_end_idx:  # No overlapping
-                img_patch_idx = coords_to_patch_idx(box_x_start, box_y_start)
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_start))
                 center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, box_x_end % 200, box_y_start % 200, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
                 
             elif box_x_start_idx != box_x_end_idx and box_y_start_idx == box_y_end_idx: # overlapping in x but not y
-                x_boundary = box_x_end // 200
-                keep_start_x = np.abs(box_x_start - x_boundary*200) > np.abs(box_x_end - x_boundary*200)
-                if keep_start_x:
-                    img_patch_idx = coords_to_patch_idx(box_x_start, box_y_start)
-                    center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, box_y_start % 200, box_y_end % 200)
-                else:
-                    img_patch_idx = coords_to_patch_idx(box_x_end, box_y_start)
-                    center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, box_y_start % 200, box_y_end % 200)
+                # Add left patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_start))
+                center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, box_y_start % 200, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
+            
+                # Add right patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_end, box_y_start))
+                center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, box_y_start % 200, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
                 
 
             elif box_x_start_idx == box_x_end_idx and box_y_start_idx != box_y_end_idx: # overlapping in y but not x
-                y_boundary = box_y_end // 200
-                keep_start_y = np.abs(box_y_start - y_boundary*200) > np.abs(box_y_end - y_boundary*200)
-                if keep_start_y:
-                    img_patch_idx = coords_to_patch_idx(box_x_start, box_y_start)
-                    center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, box_x_end % 200, box_y_start % 200, 200)
-                else:
-                    img_patch_idx = coords_to_patch_idx(box_x_start, box_y_end)
-                    center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, box_x_end % 200, 0, box_y_end % 200)
+                # Add top patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_start))
+                center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, box_x_end % 200, box_y_start % 200, 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
+                # Add bottom patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_end))
+                center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, box_x_end % 200, 0, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
 
             else: # overlapping in x and y
-                x_boundary = box_x_end // 200
-                keep_start_x = np.abs(box_x_start - x_boundary*200) > np.abs(box_x_end - x_boundary*200)
-                y_boundary = box_y_end // 200
-                keep_start_y = np.abs(box_y_start - y_boundary*200) > np.abs(box_y_end - y_boundary*200)
-                if keep_start_x and keep_start_y:
-                    img_patch_idx = coords_to_patch_idx(box_x_start, box_y_start)
-                    center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, box_y_start % 200, 200)
-                elif keep_start_x and not keep_start_y:
-                    img_patch_idx = coords_to_patch_idx(box_x_start, box_y_end)
-                    center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, 0, box_y_end % 200)
-                elif not keep_start_x and keep_start_y:
-                    img_patch_idx = coords_to_patch_idx(box_x_end, box_y_start)
-                    center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, box_y_start % 200, 200)
-                else:
-                    img_patch_idx = coords_to_patch_idx(box_x_end, box_y_end)
-                    center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, 0, box_y_end % 200)
+                # Top left patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_start))
+                center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, box_y_start % 200, 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
+            
+                # Bottom left patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_start, box_y_end))
+                center_x, center_y, width, height = format_yolo(200, 200, box_x_start % 200, 200, 0, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
+            
+                # Top right patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_end, box_y_start))
+                center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, box_y_start % 200, 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
+            
+                # Bottom right patch
+                img_patch_idxs.append(coords_to_patch_idx(box_x_end, box_y_end))
+                center_x, center_y, width, height = format_yolo(200, 200, 0, box_x_end % 200, 0, box_y_end % 200)
+                center_xs.append(center_x)
+                center_ys.append(center_y)
+                widths.append(width)
+                heights.append(height)
 
+            for img_patch_idx, center_x, center_y, width, height in zip(img_patch_idxs, center_xs, center_ys, widths, heights): 
+                # Get overall patch idx
+                overall_patch_idx = int(img_id * 16 + img_patch_idx)
 
-            # Get overall patch idx
-            overall_patch_idx = int(img_id * 16 + img_patch_idx)
+                # Save labels in a .txt file (one per image, one row per object)
+                img_info = image_infos[img_id]
+                label_split_folder = patch_idx_to_split_folder_labels[str(overall_patch_idx)]
+                save_path = os.path.join(args.dataset_path, label_split_folder, 
+                                            img_info['file_name'][:-4] + '_' + str(int(img_patch_idx)) + '_' + str(overall_patch_idx) + ".txt")
 
-            # Save labels in a .txt file (one per image, one row per object)
-            img_info = image_infos[img_id]
-            label_split_folder = patch_idx_to_split_folder_labels[str(overall_patch_idx)]
-            save_path = os.path.join(args.dataset_path, label_split_folder, 
-                                     img_info['file_name'][:-4] + '_' + str(int(img_patch_idx)) + '_' + str(overall_patch_idx) + ".txt")
-
-            with open(save_path, 'a') as file:
-                file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
+                with open(save_path, 'a') as file:
+                    file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
 
 
     else:
