@@ -29,12 +29,12 @@ def main():
             del data
 
         # Create directories for train, val, and test patches, and labels to match YOLO format
-        train_patches_folder = os.path.join(args.dataset_path, 'train_image_patches')
-        val_patches_folder = os.path.join(args.dataset_path, 'val_image_patches')
-        test_patches_folder = os.path.join(args.dataset_path, 'test_image_patches')
-        train_labels_folder = os.path.join(args.dataset_path, 'train_image_labels')
-        val_labels_folder = os.path.join(args.dataset_path, 'val_image_labels')
-        test_labels_folder = os.path.join(args.dataset_path, 'test_image_labels')
+        train_patches_folder = os.path.join(args.dataset_path, 'yolo', 'train', 'images')
+        val_patches_folder = os.path.join(args.dataset_path, 'yolo', 'val', 'images')
+        test_patches_folder = os.path.join(args.dataset_path, 'yolo', 'test', 'images')
+        train_labels_folder = os.path.join(args.dataset_path, 'yolo', 'train', 'labels')
+        val_labels_folder = os.path.join(args.dataset_path, 'yolo', 'val', 'labels')
+        test_labels_folder = os.path.join(args.dataset_path, 'yolo', 'test', 'labels')
         for folder in [train_patches_folder, val_patches_folder, test_patches_folder, 
                        train_labels_folder, val_labels_folder, test_labels_folder]:
             if not os.path.exists(folder):
