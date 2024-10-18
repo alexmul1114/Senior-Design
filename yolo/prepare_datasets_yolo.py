@@ -12,7 +12,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, required=True, help='Dataset to convert')
-    parser.add_argument('--dataset_path', type=str, required=True, help='Dataset to convert')
+    parser.add_argument('--dataset_path', type=str, required=True, help='Dataset path')
     parser.add_argument('--make_patches', action='store_true')
     args = parser.parse_args()
 
@@ -197,11 +197,15 @@ def main():
                 # Save labels in a .txt file (one per image, one row per object)
                 img_info = image_infos[img_id]
                 label_split_folder = patch_idx_to_split_folder_labels[str(overall_patch_idx)]
-                save_path = os.path.join(args.dataset_path, label_split_folder, 
+                save_path = os.path.join(label_split_folder, 
                                             img_info['file_name'][:-4] + '_' + str(int(img_patch_idx)) + '_' + str(overall_patch_idx) + ".txt")
 
+                # Append to existing labels for patch or create new file if none exist
                 with open(save_path, 'a') as file:
                     file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
+                #except:
+                #    with open(save_path, 'a') as file:
+                #        file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
 
 
     else:
