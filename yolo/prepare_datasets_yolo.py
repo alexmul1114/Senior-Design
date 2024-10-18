@@ -6,7 +6,8 @@ import json
 from PIL import Image
 from tqdm import tqdm
 import numpy as np
-import pickle
+import yaml
+import shutil
 
 def main():
 
@@ -27,6 +28,7 @@ def main():
             image_infos = data['images']
             image_annotations = data['annotations']
             del data
+            
 
         # Create directories for train, val, and test patches, and labels to match YOLO format
         train_patches_folder = os.path.join(args.dataset_path, 'yolo', 'train', 'images')
@@ -35,6 +37,15 @@ def main():
         train_labels_folder = os.path.join(args.dataset_path, 'yolo', 'train', 'labels')
         val_labels_folder = os.path.join(args.dataset_path, 'yolo', 'val', 'labels')
         test_labels_folder = os.path.join(args.dataset_path, 'yolo', 'test', 'labels')
+
+        # Clear existing labels first so labels are not repeated if this script run multiple times
+        try:
+            shutil.rmtree(train_labels_folder)
+            shutil.rmtree(val_labels_folder)
+            shutil.rmtree(test_labels_folder)
+        except:
+            pass
+
         for folder in [train_patches_folder, val_patches_folder, test_patches_folder, 
                        train_labels_folder, val_labels_folder, test_labels_folder]:
             if not os.path.exists(folder):
@@ -203,9 +214,15 @@ def main():
                 # Append to existing labels for patch or create new file if none exist
                 with open(save_path, 'a') as file:
                     file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
-                #except:
-                #    with open(save_path, 'a') as file:
-                #        file.write("0 " + str(center_x) + " " + str(center_y) + " " + str(width) + " " + str(height) + "\n")
+
+
+        # Create yaml file for yolo
+        yaml_info = {"path":os.path.join(args.dataset_path, "yolo"), "train":"train/images", 
+                     "val":"val/images", "test":"test/images", "names":{0:"ship"}}
+        with open(os.path.join(args.dataset_path, 'yolo', args.dataset.lower() + '.yaml'), 'w') as yaml_file:
+            yaml.dump(yaml_info, yaml_file, default_flow_style=False, sort_keys=False)
+        #stream = file(os.path.join(args.dataset_path, 'yolo', args.dataset.lower() + '.yaml'), 'w')
+        #yaml.dump(yaml_info, stream)
 
 
     else:
