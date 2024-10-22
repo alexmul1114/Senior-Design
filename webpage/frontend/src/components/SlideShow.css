@@ -1,0 +1,26 @@
+.slideshow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .slide {
+    color: #ffffff;
+    margin: 0 20px;
+  }
+  
+  button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  button:hover {
+    color: #4eb5f1;
+  }

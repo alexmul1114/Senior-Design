@@ -1,0 +1,32 @@
+.home-page {
+    text-align: center;
+    color: #ffffff;
+    background-color: #1c1c1c;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .title {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #d1d1d1;
+  }
+  
+  .get-started-btn {
+    background-color: #4eb5f1;
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .get-started-btn:hover {
+    background-color: #61dafb;
+  }

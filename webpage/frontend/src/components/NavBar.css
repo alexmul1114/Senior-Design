@@ -1,0 +1,40 @@
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1c1c1c;
+    padding: 10px;
+    color: #ffffff;
+  }
+  
+  .logo {
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .search-bar {
+    flex: 1;
+    margin: 0 20px;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    color: #ffffff;
+    border-radius: 5px;
+  }
+  
+  .images-button, .profile-icon {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .images-button:hover, .profile-icon:hover {
+    color: #4eb5f1;
+  }
+  
+  .profile-icon {
+    font-size: 20px;
+  }
+  
+  
