@@ -1,40 +1,52 @@
-.nav-bar {
+.nav-bar-wrapper {
+    position: fixed;
+    transform: translateX(-50%);
+    width: auto;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .nav-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #1c1c1c;
-    padding: 10px;
-    color: #ffffff;
+    background-color: #333333; /* Changed background to grey */
+    padding: 4px 4px; /* Thinner padding for a slimmer nav-bar */
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Adds a shadow to make it look like a card */
+    position: fixed; /* Keeps the nav-bar fixed on top */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   
   .logo {
-    height: 40px;
+    height: 30px; /* Reduced height for a thinner nav-bar */
     cursor: pointer;
+    border-radius: 100%;
+    padding: 1px;
+    transition: all 0.4s ease; /* Smooth transition for hover effect */
+  }
+  .logo:hover {
+    background-color: #3b87b3;
+    transform: scale(1.05);
   }
   
-  .search-bar {
-    flex: 1;
-    margin: 0 20px;
-    padding: 10px;
-    background-color: #333;
-    border: none;
-    color: #ffffff;
+  .images-button {
+    background-color: #4eb5f1; /* Added background to images button */
+    padding: 6px 10px; /* Restricted size */
     border-radius: 5px;
-  }
-  
-  .images-button, .profile-icon {
-    background: none;
-    border: none;
-    color: #ffffff;
     cursor: pointer;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    transition: all 0.4s ease; /* Smooth transition for hover effect */
   }
   
-  .images-button:hover, .profile-icon:hover {
-    color: #4eb5f1;
+  .images-button:hover {
+    background-color: #3b87b3;
+    transform: scale(1.05);
   }
-  
-  .profile-icon {
-    font-size: 20px;
-  }
-  
-  

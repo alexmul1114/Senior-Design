@@ -1,5 +1,4 @@
 .home-page {
-    text-align: center;
     color: #ffffff;
     background-color: #1c1c1c;
     padding: 20px;
@@ -9,12 +8,14 @@
   .title {
     font-size: 48px;
     margin-bottom: 10px;
+    text-align: left; /* Align title to the upper left corner */
   }
   
   .description {
     font-size: 18px;
     margin-bottom: 20px;
     color: #d1d1d1;
+    text-align: left; /* Align paragraph below the title */
   }
   
   .get-started-btn {

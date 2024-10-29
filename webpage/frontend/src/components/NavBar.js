@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginPopup from './LoginPopup';
 import logo from '../assets/logo.png';
+import profile from '../assets/profile.png';
 import './NavBar.css';
 
 const NavBar = () => {
@@ -20,11 +21,8 @@ const NavBar = () => {
   return (
     <div className="nav-bar">
       <img src={logo} alt="Logo" className="logo" onClick={handleLogoClick} />
-      <input type="text" placeholder="Search..." className="search-bar" />
-      <button className="images-button" onClick={() => navigate('/images')}>Images</button>
-      <div className="profile-icon" onClick={handleProfileClick}>
-        <span>👤</span>
-      </div>
+      <button className="images-button" onClick={() => navigate('/images')}>Upload Images</button>
+      <img src={profile} alt="Profile" className="logo" onClick={handleProfileClick} />
       {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
     </div>
   );
