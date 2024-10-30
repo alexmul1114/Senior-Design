@@ -13,7 +13,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, required=True, help='Dataset to convert')
-    parser.add_argument('--dataset_path', type=str, required=True, help='Dataset path')
+    parser.add_argument('--dataset_path', type=str, required=True, help='Full dataset path')
     parser.add_argument('--make_patches', action='store_true')
     args = parser.parse_args()
 
