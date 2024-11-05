@@ -1,3 +1,6 @@
+# The necessary modifications were made for each of the training runs I did for all of the different versions of the dataset; i.e.
+# the file paths, image size, batch size (changed from 16 to 8 for 640x640 resized images), and experiment name.
+
 from ultralytics import YOLO
 
 # Define paths and configurations
