@@ -1,0 +1,21 @@
+.profile-page {
+    color: #ffffff;
+    background-color: #1c1c1c;
+    padding: 20px;
+    min-height: 100vh;
+    transition: opacity 0.5s ease;
+  }
+  
+  .profile-page input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: #ffffff;
+  }
+  
+  .your-images {
+    margin-top: 20px;
+  }

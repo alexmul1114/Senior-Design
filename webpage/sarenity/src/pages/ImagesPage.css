@@ -1,0 +1,66 @@
+.images-page {
+    display: flex;
+    color: #ffffff;
+    background-color: #1c1c1c;
+    padding: 20px;
+    min-height: 100vh;
+    transition: opacity 0.5s ease;
+  }
+  
+  .left-panel {
+    flex: 1;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .right-panel {
+    flex: 1;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: #ffffff;
+  }
+  
+  button {
+    margin-top: 20px;
+    background-color: #4eb5f1;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #61dafb;
+  }
+
+  .title-images {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-align: left; /* Align title to the upper left corner */
+  }
+
+  .submit-btn {
+    background-color: #333;
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 20%;
+    margin: 10px; 
+    transition-duration: .5s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #252525;
+  }

@@ -1,0 +1,24 @@
+.footer {
+  background-color: #1c1c1c;
+  padding: 20px;
+  color: #ffffff;
+  text-align: center;
+  border-top: 1px solid #333;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.footer button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin-right: 10px;
+  transition-duration: .5s;
+}
+
+.footer button:hover {
+  background-color: #252525;
+}

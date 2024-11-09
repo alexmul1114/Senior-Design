@@ -1,0 +1,37 @@
+.home-page {
+    color: #ffffff;
+    background-color: #1c1c1c;
+    padding: 20px;
+    min-height: 100vh;
+    transition: opacity 0.5s ease;
+  }
+  
+  .title {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-align: left; /* Align title to the upper left corner */
+  }
+  
+  .description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #d1d1d1;
+    text-align: left; /* Align paragraph below the title */
+  }
+  
+  .get-started-btn {
+    background-color: #333;
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 20%;
+    margin: 10px; 
+    transition-duration: .5s;
+  }
+  
+  .get-started-btn:hover {
+    background-color: #252525;
+  }
