@@ -70,4 +70,4 @@ const SelectedImagesTable = () => {
   );
 };
 
-export default SelectedImagesTable;
+export default SelectedImagesTable; 

@@ -15,7 +15,7 @@ const NavBar = () => {
 
   const handleProfileClick = () => {
     // If not logged in, show login popup
-    setShowLoginPopup(true);
+    setShowLoginPopup(false);
   };
 
   return (
@@ -24,7 +24,7 @@ const NavBar = () => {
       <button className="nav-button" onClick={() => navigate('/')}>Home Page</button>
       <button className="nav-button" onClick={() => navigate('/images')}>Upload Images</button>
       <button className="nav-button" onClick={() => navigate('/about-us')}>About SARenity</button>
-      <button className="nav-button" onClick={() => navigate('/')}>Accounts</button>
+      <button className="nav-button" >Accounts</button>
       <img src={profile} alt="Profile" className="logo" onClick={handleProfileClick} />
       {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
     </div>

@@ -1,92 +1,36 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const basicAuth = require('express-basic-auth');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Basic authentication middleware
-app.use(basicAuth({
-  users: { 'admin': 'password123' }, // Replace 'password123' with your desired password
-  challenge: true
-}));
+// Use CORS to allow requests from your frontend
+app.use(cors());
 
-// Define paths for folders
-const imagesFolder = path.join(__dirname, 'assets/images');
-const selectedImagesFolder = path.join(__dirname, 'assets/selectedImages');
-const homePageSlidesFolder = path.join(__dirname, 'assets/homePageSlides');
-const processedImagesFolder = path.join(__dirname, 'assets/processedImages');
+// Serve static files from the 'assets' folder
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+// Endpoint to list images from the 'assets/images' folder
+app.get('/images', (req, res) => {
+  const imagesDir = path.join(__dirname, 'assets/images');
 
-// Create folders if they don't exist
-const folders = [imagesFolder, selectedImagesFolder, homePageSlidesFolder, processedImagesFolder];
-folders.forEach((folder) => {
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder, { recursive: true });
-  }
-});
-
-// Endpoint to get list of images from a specified folder
-app.get('/api/images/:folder', (req, res) => {
-  const folderName = req.params.folder;
-  let folderPath;
-
-  switch (folderName) {
-    case 'images':
-      folderPath = imagesFolder;
-      break;
-    case 'selectedImages':
-      folderPath = selectedImagesFolder;
-      break;
-    case 'homePageSlides':
-      folderPath = homePageSlidesFolder;
-      break;
-    case 'processedImages':
-      folderPath = processedImagesFolder;
-      break;
-    default:
-      return res.status(400).send('Invalid folder name');
-  }
-
-  fs.readdir(folderPath, (err, files) => {
+  fs.readdir(imagesDir, (err, files) => {
     if (err) {
-      return res.status(500).send('Unable to read folder');
+      console.error('Error reading images directory:', err);
+      return res.status(500).json({ error: 'Unable to read images directory' });
     }
-    res.json(files);
+
+    const images = files.map((file) => ({
+      name: file,
+      url: `${req.protocol}://${req.get('host')}/assets/images/${file}`,
+    }));
+
+    res.json(images);
   });
 });
 
-// Endpoint to add an image to selectedImages folder
-app.post('/api/addImage', (req, res) => {
-  const { imageName } = req.body;
-  const sourcePath = path.join(imagesFolder, imageName);
-  const destinationPath = path.join(selectedImagesFolder, imageName);
-
-  fs.copyFile(sourcePath, destinationPath, (err) => {
-    if (err) {
-      return res.status(500).send('Failed to copy image');
-    }
-    res.send('Image added successfully');
-  });
-});
-
-// Endpoint to remove an image from selectedImages folder
-app.post('/api/removeImage', (req, res) => {
-  const { imageName } = req.body;
-  const filePath = path.join(selectedImagesFolder, imageName);
-
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      return res.status(500).send('Failed to remove image');
-    }
-    res.send('Image removed successfully');
-  });
-});
-
-// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

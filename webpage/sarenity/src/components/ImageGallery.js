@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import './ImageGallery.css';
 
-// Using require.context to dynamically load all images from assets/images folder
-const importAll = (requireContext) => requireContext.keys().map(requireContext);
-const images = importAll(require.context('../assets/images', false, /\.(png|jpe?g|svg)$/)).map((src, index) => ({
-  src,
-  name: src.split('/').pop()
-}));
-
 const ImageGallery = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [columnCount, setColumnCount] = useState(3);
-  const [filteredImages, setFilteredImages] = useState(images);
+  const [images, setImages] = useState([]);
+  const [filteredImages, setFilteredImages] = useState([]);
+
+  useEffect(() => {
+    // Fetch images from the backend hosted on Heroku
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/images');
+        const data = await response.json();
+        const imagesData = data.map((img, index) => ({
+          src: img.url,
+          name: img.name,
+        }));
+        setImages(imagesData);
+        setFilteredImages(imagesData);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+    fetchImages();
+  }, []);
 
   useEffect(() => {
     setFilteredImages(
@@ -20,13 +33,15 @@ const ImageGallery = () => {
         image.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm]);
+  }, [searchTerm, images]);
 
   const toggleSelectImage = (index) => {
     setSelectedImages((prevSelectedImages) => {
       if (prevSelectedImages.includes(index)) {
+        // Remove image from selection
         return prevSelectedImages.filter((i) => i !== index);
       } else {
+        // Add image to selection
         return [...prevSelectedImages, index];
       }
     });
@@ -74,3 +89,4 @@ const ImageGallery = () => {
 };
 
 export default ImageGallery;
+
