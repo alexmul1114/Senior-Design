@@ -64,9 +64,9 @@
   }
   
   .image-item.selected {
-    transform: scale(1.05);
+    transform: scale(0.95);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    border: 2px solid #ffffff;
+    background-color: #7d7d7d;
   }
   
   .image-item img {

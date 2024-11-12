@@ -1,16 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import './SelectedImagesTable.css';
 
-// Using require.context to dynamically load all images from assets/selectedImages folder
-const importAll = (requireContext) => requireContext.keys().map(requireContext);
-const images = importAll(require.context('../assets/selectedImages', false, /\.(png|jpe?g|svg)$/)).map((src) => ({
-  src,
-  name: src.split('/').pop(),
-  size: Math.floor(Math.random() * 100) + 50 // Mock size in KB for demonstration purposes
-}));
+const SelectedImagesTable = ({ refreshTrigger }) => {
+  const [selectedImages, setSelectedImages] = useState([]);
 
-const SelectedImagesTable = () => {
-  const [selectedImages, setSelectedImages] = useState(images);
+  const fetchSelectedImages = async () => {
+    try {
+      const response = await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/selected-images');
+      const data = await response.json();
+      const imagesData = await Promise.all(data.map(async (img) => {
+        const response = await fetch(img.url);
+        const blob = await response.blob();
+        const size = blob.size / 1024; // Convert size to KB
+        return {
+          src: img.url,
+          name: img.name,
+          size: Math.round(size * 100) / 100, // Round to 2 decimal places
+        };
+      }));
+      setSelectedImages(imagesData);
+    } catch (error) {
+      console.error('Error fetching selected images:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch
+    fetchSelectedImages();
+
+    // Set up polling to fetch images every 5 seconds
+    const intervalId = setInterval(fetchSelectedImages, 500);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [refreshTrigger]);
 
   const handleCategoryChange = (index, newCategory) => {
     const updatedImages = [...selectedImages];
@@ -18,11 +41,23 @@ const SelectedImagesTable = () => {
     setSelectedImages(updatedImages);
   };
 
-  const handleRemoveImage = (index) => {
-    const updatedImages = selectedImages.filter((_, i) => i !== index);
-    setSelectedImages(updatedImages);
-    // Simulate removing the file from the assets/selectedImages folder
-    console.log(`Removed image: ${selectedImages[index].name}`);
+  const handleRemoveImage = async (index) => {
+    const imageName = selectedImages[index].name;
+    try {
+      // Call the backend to remove the image from the selectedImages folder
+      await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/remove-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageName }),
+      });
+      // Remove image from local state
+      const updatedImages = selectedImages.filter((_, i) => i !== index);
+      setSelectedImages(updatedImages);
+    } catch (error) {
+      console.error('Error removing image:', error);
+    }
   };
 
   const totalSize = selectedImages.reduce((total, image) => total + image.size, 0);
@@ -60,7 +95,7 @@ const SelectedImagesTable = () => {
           ))}
           <tr className="totals-row">
             <td><strong>Total</strong></td>
-            <td><strong>{totalSize} KB</strong></td>
+            <td><strong>{totalSize.toFixed(2)} KB</strong></td>
             <td></td>
             <td></td>
           </tr>
@@ -70,4 +105,4 @@ const SelectedImagesTable = () => {
   );
 };
 
-export default SelectedImagesTable; 
+export default SelectedImagesTable;

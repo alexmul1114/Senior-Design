@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ImageGallery.css';
 
-const ImageGallery = () => {
+const ImageGallery = ({ onImageUpdate }) => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [columnCount, setColumnCount] = useState(3);
@@ -14,7 +14,7 @@ const ImageGallery = () => {
       try {
         const response = await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/images');
         const data = await response.json();
-        const imagesData = data.map((img, index) => ({
+        const imagesData = data.map((img) => ({
           src: img.url,
           name: img.name,
         }));
@@ -35,16 +35,53 @@ const ImageGallery = () => {
     );
   }, [searchTerm, images]);
 
-  const toggleSelectImage = (index) => {
+  const toggleSelectImage = async (index) => {
+    const image = images[index];
     setSelectedImages((prevSelectedImages) => {
       if (prevSelectedImages.includes(index)) {
         // Remove image from selection
+        removeImageFromSelected(image.name);
         return prevSelectedImages.filter((i) => i !== index);
       } else {
         // Add image to selection
+        addImageToSelected(image.name);
         return [...prevSelectedImages, index];
       }
     });
+  };
+
+  const addImageToSelected = async (imageName) => {
+    try {
+      await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/add-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageName }),
+      });
+      if (onImageUpdate) {
+        onImageUpdate();
+      }
+    } catch (error) {
+      console.error('Error adding image to selected folder:', error);
+    }
+  };
+
+  const removeImageFromSelected = async (imageName) => {
+    try {
+      await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/remove-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageName }),
+      });
+      if (onImageUpdate) {
+        onImageUpdate();
+      }
+    } catch (error) {
+      console.error('Error removing image from selected folder:', error);
+    }
   };
 
   const handleAddColumn = () => {
@@ -52,9 +89,9 @@ const ImageGallery = () => {
   };
 
   const calculateGalleryHeight = () => {
-    const rowCount = Math.ceil(filteredImages.length / columnCount);
-    const rowHeight = 200; // Approximate height for each row, including padding
-    return Math.min(rowCount * rowHeight, 700);
+    //const rowCount = Math.ceil(filteredImages.length / columnCount);
+    //const rowHeight = 200; // Approximate height for each row, including padding
+    return window.innerHeight * 0.4;
   };
 
   return (
@@ -89,4 +126,3 @@ const ImageGallery = () => {
 };
 
 export default ImageGallery;
-
