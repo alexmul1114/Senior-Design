@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ImagesPage from './pages/ImagesPage';
+import ResultsPage from './pages/ImagesPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutUsPage from './pages/AboutUsPage';
 import NavBar from './components/NavBar';
@@ -33,6 +34,7 @@ function App() {
               <Route path="/images" element={<ImagesPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
+              <Route path="/results" element={<ResultsPage />} />
             </Routes>
           </>
         )}

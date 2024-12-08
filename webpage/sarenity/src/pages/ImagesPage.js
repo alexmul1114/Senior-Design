@@ -12,13 +12,14 @@ const ImagesPage = () => {
     // Update the refresh trigger to force re-render of SelectedImagesTable
     setRefreshTrigger((prev) => prev + 1);
   };
+
   return (
     <div className="images-page">
       <div className="left-panel">
         <div className="your-images">
           <h1 className="title-images">Images:</h1>
           <ImageGallery onImageUpdate={handleImageUpdate} />
-          <DragDrop />
+          <DragDrop onImageUpload={handleImageUpdate} />
         </div>
       </div>
       <div className="right-panel">

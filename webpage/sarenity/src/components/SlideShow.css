@@ -4,17 +4,24 @@
   margin: 0 auto;
   overflow-x: scroll;
   white-space: nowrap;
-  border-radius: 3px;
-  
   scroll-behavior: smooth;
+  background-color: #1c1c1c;
+  -ms-overflow-style: none;  /* Hide scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
 
-.slides {
-  display: inline-flex;
-}
-
-.slides img {
+.slides img, .slides video {
   width: auto;
   height: 100%;
   max-height: 450px;
+  object-fit: cover; /* Ensures the video fills the given space nicely */
+  background-color: #1c1c1c;
+  display: inline-flex;
+  
+}
+
+.slide-video {
+  object-fit: cover; /* Ensures the video fills the given space nicely */
+  background-color: #1c1c1c;
+  display: inline-flex;
 }

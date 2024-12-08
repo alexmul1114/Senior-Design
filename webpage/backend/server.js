@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,25 @@ if (!fs.existsSync(selectedImagesDir)) {
 
 // Serve static files from the 'assets' folder
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+// Set up multer for handling file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, imagesDir); // Save files to the images directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+// Endpoint to handle file uploads
+app.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  res.status(200).json({ message: 'File uploaded successfully' });
+});
 
 // Endpoint to list images from the 'assets/images' folder
 app.get('/images', (req, res) => {

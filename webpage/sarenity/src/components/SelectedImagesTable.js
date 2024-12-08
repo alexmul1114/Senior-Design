@@ -7,17 +7,17 @@ const SelectedImagesTable = ({ refreshTrigger }) => {
   const fetchSelectedImages = async () => {
     try {
       const response = await fetch('https://rocky-crag-89815-04ddc2eb6beb.herokuapp.com/selected-images');
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+  
       const data = await response.json();
-      const imagesData = await Promise.all(data.map(async (img) => {
-        const response = await fetch(img.url);
-        const blob = await response.blob();
-        const size = blob.size / 1024; // Convert size to KB
-        return {
-          src: img.url,
-          name: img.name,
-          size: Math.round(size * 100) / 100, // Round to 2 decimal places
-        };
+      const imagesData = data.map((img) => ({
+        src: img.url,
+        name: img.name,
+        size: img.size || Math.floor(Math.random() * 100) + 50, // Mock size in KB if not provided
       }));
+  
       setSelectedImages(imagesData);
     } catch (error) {
       console.error('Error fetching selected images:', error);
@@ -29,7 +29,7 @@ const SelectedImagesTable = ({ refreshTrigger }) => {
     fetchSelectedImages();
 
     // Set up polling to fetch images every 5 seconds
-    const intervalId = setInterval(fetchSelectedImages, 500);
+    const intervalId = setInterval(fetchSelectedImages, 100000);
 
     // Clean up interval on component unmount
     return () => clearInterval(intervalId);

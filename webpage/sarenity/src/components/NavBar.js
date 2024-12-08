@@ -23,6 +23,7 @@ const NavBar = () => {
       <img src={logo} alt="Logo" className="logo" onClick={handleLogoClick} />
       <button className="nav-button" onClick={() => navigate('/')}>Home Page</button>
       <button className="nav-button" onClick={() => navigate('/images')}>Upload Images</button>
+      <button className="nav-button" onClick={() => navigate('/results')}>Results</button>
       <button className="nav-button" onClick={() => navigate('/about-us')}>About SARenity</button>
       <button className="nav-button" >Accounts</button>
       <img src={profile} alt="Profile" className="logo" onClick={handleProfileClick} />
