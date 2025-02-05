@@ -1,2 +1,5 @@
 matplotlib==3.9.2
-Pillow==10.4.0
+numpy==2.1.2
+Pillow==11.0.0
+tqdm==4.66.5
+ultralytics==8.3.16
