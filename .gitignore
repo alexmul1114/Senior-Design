@@ -1,3 +1,7 @@
 datasets
 .conda
 .ipynb_checkpoints/
+yolo11m.pt
+yolo11n.pt
+pretrained_models
+runs/
