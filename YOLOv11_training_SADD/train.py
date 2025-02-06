@@ -24,7 +24,7 @@ def main():
     model.train(
         data=args.data_yaml,           # Path to the YAML configuration file
         epochs=200,                # Number of training epochs (adjust based on need)
-        batch=128,                  # Batch size (adjust based on GPU memory)
+        batch=64,                  # Batch size (adjust based on GPU memory)
         imgsz=200,                 # Input image size (matches the preprocessed size)
         save_dir=args.results_dir,      # Directory to save training logs and checkpoints
         name='airplane_detection_resize200', # Custom name for the experiment
