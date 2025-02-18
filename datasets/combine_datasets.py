@@ -32,7 +32,7 @@ def main():
     yaml_data = {
         "path": combined_datasets_dir,
         "train": os.path.join("train", "images"),
-        "val": os.path.join("val", "images"),
+        "val": os.path.join("valid", "images"),
         "test": os.path.join("test", "images"),
         "names": {0: "ship", 1: "airplane"}
     }
