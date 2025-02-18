@@ -1,6 +1,7 @@
 datasets/HRSID
 datasets/HRSID_SADD_Combined
 datasets/SADD
+datasets/xView3
 .conda
 .ipynb_checkpoints/
 yolo11m.pt
