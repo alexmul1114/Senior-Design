@@ -25,7 +25,7 @@ const NavBar = () => {
       <button className="nav-button" onClick={() => navigate('/images')}>Upload Images</button>
       <button className="nav-button" onClick={() => navigate('/results')}>Results</button>
       <button className="nav-button" onClick={() => navigate('/about-us')}>About SARenity</button>
-      <button className="nav-button" >Accounts</button>
+      <button className="nav-button" onClick={() => navigate('/examples')}>Example</button>
       <img src={profile} alt="Profile" className="logo" onClick={handleProfileClick} />
       {showLoginPopup && <LoginPopup onClose={() => setShowLoginPopup(false)} />}
     </div>

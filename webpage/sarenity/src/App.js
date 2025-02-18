@@ -6,6 +6,7 @@ import ResultsPage from './pages/ImagesPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutUsPage from './pages/AboutUsPage';
 import NavBar from './components/NavBar';
+import ExamplePage from './pages/ExamplePage';
 import Login from './components/Login';
 import './App.css';
 
@@ -35,6 +36,7 @@ function App() {
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/about-us" element={<AboutUsPage />} />
               <Route path="/results" element={<ResultsPage />} />
+              <Route path="/examples" element={<ExamplePage />} />
             </Routes>
           </>
         )}
