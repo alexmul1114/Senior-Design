@@ -56,6 +56,22 @@ def main():
             for file in os.listdir(src_labels_path):
                 shutil.copy2(os.path.join(src_labels_path, file), os.path.join(dst_labels_path, file))
 
+            # For SADD airplane images, change .txt file labels so that they are class 1
+            for filename in os.listdir(dst_labels_path):
+                if filename.endswith(".txt") and not filename.startswith("P"):
+                    file_path = os.path.join(dst_labels_path, filename)
+                    with open(file_path, "r") as f:
+                        lines = f.readlines()
+                    
+                    new_lines = []
+                    for line in lines:
+                        if line.startswith("0 "):
+                            line = "1" + line[1:]
+                        new_lines.append(line)
+
+                    with open(file_path, "w") as f:
+                        f.writelines(new_lines)
+
     print("Combined HRSID/SADD Dataset Successfully Created!")
 
 if __name__ == "__main__":
