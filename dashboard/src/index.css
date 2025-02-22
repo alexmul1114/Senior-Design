@@ -1,0 +1,22 @@
+/* Reset some basic styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Define color variables (6 total) */
+:root {
+  --primary-color: #007BFF;      /* Example: main brand color */
+  --secondary-color: #6C757D;    /* Example: secondary color */
+  --accent-color: #28A745;       /* Example: accent color */
+  --background-color: #FFFFFF;   /* Dashboard background color */
+  --text-color: #333333;         /* Main text color */
+  --highlight-color: #FFC107;    /* For highlights/warnings */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

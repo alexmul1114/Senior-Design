@@ -1,0 +1,42 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* Header at the top */
+.app-container > header {
+  flex: 0 0 auto;
+}
+
+/* The main area below the header */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden; /* if you want to prevent scrollbars from each sub-area */
+}
+
+/* Navigation on the far left */
+.main-layout > nav {
+  flex: 0 0 60px; /* small vertical bar for nav icons/buttons */
+  background-color: #f2f2f2;
+  border-right: 1px solid #ddd;
+}
+
+/* Options bar to the right of the navigation */
+.main-layout > aside {
+  flex: 0 0 20%; /* 20-30% of the width for the "options" vertical bar */
+  max-width: 300px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+}
+
+/* Content area (the rest) */
+.content-wrapper {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--background-color);
+  overflow: auto;
+}

@@ -1,0 +1,38 @@
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--background-color);
+    padding: 0 1rem;
+    height: 60px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header-left .logo {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-button {
+    background-color: #e0e0e0;
+    border: none;
+    color: var(--text-color);
+    padding: 0.5rem 0.75rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .profile-button {
+    background-color: #ddd;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: var(--text-color);
+  }
+  
