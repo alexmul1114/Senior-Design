@@ -1,24 +1,52 @@
+/* Ensure the navigation bar layout remains consistent */
 .navigation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 1rem;
-    height: 100%;
-  }
-  
-  .navigation-container button {
-    background-color: #f2f2f2;
-    border: none;
-    color: var(--text-color);
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    cursor: pointer;
-    width: 40px; /* keep them small, or adjust as desired */
-    border-radius: 4px;
-    font-size: 0.8rem;
-  }
-  
-  .navigation-container button:hover {
-    background-color: #ddd;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+  height: 100%;
+}
+
+/* General button styling */
+.nav-button {
+  background-color: transparent;
+  border: none;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px; /* Ensuring a square button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Home button icon styling */
+.nav-icon {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  object-fit: contain; /* Ensures the icon fits without distortion */
+}
+
+/* Hover effect for better UI feedback */
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+/* Attribution text styling */
+.icon-attribution {
+  margin-top: auto; /* Pushes it to the bottom */
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+  color: #666;
+}
+
+.icon-attribution a {
+  text-decoration: none;
+  color: #666;
+}
+
+.icon-attribution a:hover {
+  text-decoration: underline;
+}
