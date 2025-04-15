@@ -13,10 +13,9 @@ DEST_DIR="tif-images"
 mkdir -p "$DEST_DIR"
 
 # List the first 20 top-level folders in the prefix.
-folders=$(aws s3 ls s3://$BUCKET/$PREFIX/ --no-sign-request | awk '/PRE/ {print $2}' | head -n 20)
+folders=$(aws s3 ls s3://$BUCKET/$PREFIX/ --no-sign-request | awk '/PRE/ {print $2}' | head -n 200)
 
 downloaded=0
-s3://umbra-open-data-catalog/sar-data/tasks/ship_detection_testdata/00f0e649-8618-45cc-9c6d-629a1576ec54/2023-03-25-02-22-27_UMBRA-04/2023-03-25-02-22-27_UMBRA-04_GEC.tif
 for folder in $folders; do
     # Remove trailing slash from folder name
     folder=${folder%/}
