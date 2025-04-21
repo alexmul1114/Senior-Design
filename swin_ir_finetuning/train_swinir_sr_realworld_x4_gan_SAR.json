@@ -1,0 +1,123 @@
+{
+    "task": "swinir_sr_realworld_x4_gan_SAR" 
+    , "model": "gan"       
+    , "gpu_ids": [0]
+  
+    , "scale": 4      
+    , "n_channels": 3  
+  
+    , "path": {
+      "root": "superresolution"  
+      , "pretrained_netG": "/home/3184/Senior-Design/sr_models/003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN.pth"  
+      , "pretrained_netD": null  
+      , "pretrained_netE": null  
+      }
+  
+    , "datasets": {
+      "train": {
+        "name": "train_dataset"          
+        , "dataset_type": "blindsr"       
+        , "dataroot_H": "/home/3184/Senior-Design/swin_ir_finetuning/umbra_dataset/ship_patches_high_res_train"
+        , "dataroot_L": null             
+  
+        , "degradation_type": "bsrgan"    
+        , "H_size": 64          
+        , "shuffle_prob": 0.1             
+        , "lq_patchsize": 16
+        , "use_sharp": false
+  
+        , "dataloader_shuffle": true
+        , "dataloader_num_workers": 1
+        , "dataloader_batch_size": 8    
+      }
+      , "test": {
+        "name": "test_dataset"            
+        , "dataset_type": "blindsr"
+  
+        , "degradation_type": "bsrgan"   
+        , "H_size": 64          
+        , "shuffle_prob": 0.1            
+        , "lq_patchsize": 16
+        , "use_sharp": false
+  
+        , "dataroot_H": "/home/3184/Senior-Design/swin_ir_finetuning/umbra_dataset/ship_patches_high_res_test"  
+        , "dataroot_L": null            
+      }
+    }
+  
+    , "netG": {
+      "net_type": "swinir"
+      , "upscale": 4
+      , "in_chans": 3
+      , "img_size": 64
+      , "window_size": 8
+      , "img_range": 1.0
+      , "depths": [6, 6, 6, 6, 6, 6]
+      , "embed_dim": 180
+      , "num_heads": [6, 6, 6, 6, 6, 6]
+      , "mlp_ratio": 2
+      , "upsampler": "nearest+conv"        
+      , "resi_connection": "1conv"        
+      , "pretrained_model": "/home/3184/Senior-Design/sr_models/003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN.pth" 
+      , "init_type": "default"
+    }
+  
+    , "netD": {
+      "net_type": "discriminator_unet" 
+      , "in_nc": 3
+      , "base_nc": 64
+      , "n_layers": 3                  
+      , "norm_type": "spectral"        
+  
+      , "init_type": "orthogonal"      
+      , "init_bn_type": "uniform"      
+      , "init_gain": 0.2
+    }
+  
+    , "train": {
+      "G_lossfn_type": "l1"    
+      , "G_lossfn_weight": 1
+  
+      , "F_lossfn_type": "l1"  
+      , "F_lossfn_weight": 1
+      , "F_feature_layer": [2,7,16,25,34]      
+      , "F_weights": [0.1,0.1,1.0,1.0,1.0]      
+      , "F_use_input_norm": true
+      , "F_use_range_norm": false
+  
+      , "gan_type": "gan"     
+      , "D_lossfn_weight": 0.1
+  
+      , "E_decay": 0.999        
+  
+      , "D_init_iters": 0
+  
+      , "G_optimizer_type": "adam"
+      , "G_optimizer_lr": 1e-4  
+      , "G_optimizer_wd": 0
+  
+      , "D_optimizer_type": "adam"
+      , "D_optimizer_lr": 2e-5
+      , "D_optimizer_wd": 0
+  
+      , "G_scheduler_type": "MultiStepLR"
+      , "G_scheduler_milestones": [400000, 500000, 550000, 575000, 600000]
+      , "G_scheduler_gamma": 0.5
+      , "G_optimizer_reuse": true
+  
+      , "D_scheduler_type": "MultiStepLR"
+      , "D_scheduler_milestones": [400000, 500000, 550000, 575000, 600000]
+      , "D_scheduler_gamma": 0.5
+      , "D_optimizer_reuse": false
+  
+      , "G_param_strict": true
+      , "D_param_strict": true
+      , "E_param_strict": true
+  
+      , "checkpoint_test": 500
+      , "checkpoint_save": 500
+      , "checkpoint_print": 50
+      , "total_iters": 1
+    }
+  }
+  
