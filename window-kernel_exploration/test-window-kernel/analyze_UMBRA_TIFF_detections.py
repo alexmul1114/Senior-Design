@@ -20,6 +20,8 @@ args = ap.parse_args()
 # for collecting widths and heihts of bounding boxes from every specified file
 widths  = []
 heights = []
+window_size = 2500
+normalize = True
 
 for fpath in args.files:
     fpath = Path(fpath)
@@ -37,21 +39,43 @@ for fpath in args.files:
             widths.append(x2 - x1)
             heights.append(y2 - y1)
 
-# if there were boxes, print statistics
-if widths:
-    w = np.array(widths)
-    h = np.array(heights)
-
-    def stats(arr):
-        return (arr.mean(), arr.min(), arr.max(), arr.std(), arr.var())
-
-    w_mean, w_min, w_max, w_std, w_var = stats(w)
-    h_mean, h_min, h_max, h_std,  h_var = stats(h)
-
-    print("Bounding‑box width (pixels)")
-    print(f"  mean: {w_mean:.2f}   min: {w_min:.2f}   max: {w_max:.2f}   std deviation: {w_std:.2f} var: {w_var:.2f}")
-    print("Bounding‑box height (pixels)")
-    print(f"  mean: {h_mean:.2f}   min: {h_min:.2f}  max: {h_max:.2f}   std deviation: {h_std:.2f} var: {h_var:.2f}")
-    print(f"Total boxes analysed: {len(w)}")
+# if there were boxes, print statistics, not normalized to chosen window size here
+if normalize:
+    if widths:
+        w = np.array(widths)/window_size
+        h = np.array(heights)/window_size
+    
+        def stats(arr):
+            return (arr.mean(), arr.min(), arr.max(), arr.std(), arr.var())
+    
+        w_mean, w_min, w_max, w_std, w_var = stats(w)
+        h_mean, h_min, h_max, h_std,  h_var = stats(h)
+    
+        print("Bounding‑box width (normalized to window size of ", window_size, ")")
+        print(f"  mean: {w_mean:.4f}   min: {w_min:.4f}   max: {w_max:.4f}   std deviation: {w_std:.4f} var: {w_var:.4f}")
+        print("Bounding‑box height (normalized to window size of ", window_size, ")")
+        print(f"  mean: {h_mean:.4f}   min: {h_min:.4f}  max: {h_max:.4f}   std deviation: {h_std:.4f} var: {h_var:.4f}")
+        print(f"Total boxes analysed: {len(w)}")
+    else:
+        print("No bounding boxes found in the provided file(s).")
 else:
-    print("No bounding boxes found in the provided file(s).")
+    if widths:
+        w = np.array(widths)
+        h = np.array(heights)
+    
+        def stats(arr):
+            return (arr.mean(), arr.min(), arr.max(), arr.std(), arr.var())
+    
+        w_mean, w_min, w_max, w_std, w_var = stats(w)
+        h_mean, h_min, h_max, h_std,  h_var = stats(h)
+    
+        print("Bounding‑box width (pixels)")
+        print(f"  mean: {w_mean:.2f}   min: {w_min:.2f}   max: {w_max:.2f}   std deviation: {w_std:.2f} var: {w_var:.2f}")
+        print("Bounding‑box height (pixels)")
+        print(f"  mean: {h_mean:.2f}   min: {h_min:.2f}  max: {h_max:.2f}   std deviation: {h_std:.2f} var: {h_var:.2f}")
+        print(f"Total boxes analysed: {len(w)}")
+    else:
+        print("No bounding boxes found in the provided file(s).")
+    
+np.save("UMBRA_window_widths.npy", w)
+np.save("UMBRA_window_heights.npy", h)
