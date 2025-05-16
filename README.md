@@ -18,3 +18,4 @@ ECE Senior Design Project
 - umbra_ship_detection_images - contains a python script to conveniently download a specified number of images from the high-resolution UMBRA ship dataset
 - super_resolution_testing - contains a python notebook, sample results for applying different super-resolution models
 - swin_ir_finetuning - contains python notebook for preparing UMBRA images for fine-tuning a SwinIR model, a json configuration file for fine-tuning, and a fine-tuning script
+- window-kernel_exploration - contains code for testing window kernel method on higher-resolution images
