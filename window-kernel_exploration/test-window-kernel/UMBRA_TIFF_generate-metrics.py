@@ -216,9 +216,9 @@ def confirm_detections(full_image, boxes, class_names, image_label, log_file, qu
 
 # MAIN for script execution
 if __name__ == "__main__":
-    # discover every GeoTIFF we downloaded
+    # discover every TIFF we downloaded
     tifs = gather_tifs(ROOT_DIR)
-    print(f"Found {len(tifs)} GeoTIFFs in: {ROOT_DIR}")
+    print(f"Found {len(tifs)} TIFFs in: {ROOT_DIR}")
     
     # load YOLO once on GPU if available, otherwise do so on CPU
     device = "cuda" if torch.cuda.is_available() else "cpu"
