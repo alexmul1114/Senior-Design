@@ -2,6 +2,7 @@ datasets/HRSID
 datasets/HRSID_SADD_Combined
 datasets/SADD
 datasets/xView3
+datasets/tif-images
 datasets/.DS_Store
 .conda
 .ipynb_checkpoints/
