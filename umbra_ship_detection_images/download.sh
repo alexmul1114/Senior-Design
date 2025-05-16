@@ -12,8 +12,8 @@ DEST_DIR="tif-images"
 
 mkdir -p "$DEST_DIR"
 
-# List the first 20 top-level folders in the prefix.
-folders=$(aws s3 ls s3://$BUCKET/$PREFIX/ --no-sign-request | awk '/PRE/ {print $2}' | head -n 200)
+# List the first 500 top-level folders in the prefix.
+folders=$(aws s3 ls s3://$BUCKET/$PREFIX/ --no-sign-request | awk '/PRE/ {print $2}' | head -n 500)
 
 downloaded=0
 for folder in $folders; do
